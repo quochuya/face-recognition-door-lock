@@ -63,9 +63,7 @@ void FaceDetector::startCamera() {
                 if (id == 1) {
                     label = "Admin (ID: 1)";
                     color = cv::Scalar(0, 255, 0); // Màu xanh cho Admin
-                    
-                    // TODO: CHỖ NÀY SẼ GỌI API SANG SPRING BOOT (BRAIN_Module)
-                    // ApiClient::sendUnlockRequest(id);
+        
                 }
             }
 

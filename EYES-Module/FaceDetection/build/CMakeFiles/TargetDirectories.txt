@@ -1,3 +1,0 @@
-D:/FinalWave/face-recognition-door-lock/EYES-Module/FaceDetection/build/CMakeFiles/SmartLock.dir
-D:/FinalWave/face-recognition-door-lock/EYES-Module/FaceDetection/build/CMakeFiles/ALL_BUILD.dir
-D:/FinalWave/face-recognition-door-lock/EYES-Module/FaceDetection/build/CMakeFiles/ZERO_CHECK.dir

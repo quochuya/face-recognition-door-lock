@@ -1,0 +1,10 @@
+^D:\FINALWAVE\FACE-RECOGNITION-DOOR-LOCK\EYES-MODULE\FACEDETECTION\BUILD\CMAKEFILES\3AFED5568206B5391C2E218F89F5CAAD\GENERATE.STAMP.RULE
+setlocal
+D:\CMake\bin\cmake.exe -SD:/FinalWave/face-recognition-door-lock/EYES-Module/FaceDetection -BD:/FinalWave/face-recognition-door-lock/EYES-Module/FaceDetection/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/FinalWave/face-recognition-door-lock/EYES-Module/FaceDetection/build/SmartLock_Module1.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

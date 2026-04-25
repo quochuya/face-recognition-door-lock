@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Smart Lock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-5">
+    <div class="container">
+        <h2 class="mb-4">Hệ Thống Quản Lý Smart Lock</h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3 mb-4">
+                    <h4>Thêm Người Dùng Mới</h4>
+                    <input type="number" id="userId" class="form-control mb-2" placeholder="ID (VD: 1)">
+                    <input type="text" id="userName" class="form-control mb-2" placeholder="Họ và Tên">
+                    <input type="text" id="userRole" class="form-control mb-2" placeholder="Vị trí (VD: Admin)">
+                    <button class="btn btn-primary w-100" onclick="addUser()">Thêm vào Hệ thống</button>
+                    <small class="text-muted mt-2 d-block">*Lưu ý: ID này phải khớp với ID lúc train ảnh ở C++.</small>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <h4>Danh sách Cấp Quyền Mở Cửa</h4>
+                    <table class="table table-striped mt-3">
+                        <thead><tr><th>ID</th><th>Họ Tên</th><th>Vị trí</th><th>Hành động</th></tr></thead>
+                        <tbody id="userTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy danh sách khi mở trang
+        function loadUsers() {
+            fetch('/api/users').then(res => res.json()).then(data => {
+                let html = '';
+                data.forEach(user => {
+                    html += `<tr>
+                        <td>${user.id}</td>
+                        <td>${user.fullName}</td>
+                        <td>${user.role}</td>
+                        <td><button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Xóa</button></td>
+                    </tr>`;
+                });
+                document.getElementById('userTable').innerHTML = html;
+            });
+        }
+
+        // Gửi lệnh Thêm User lên Java Server
+        function addUser() {
+            const data = {
+                id: document.getElementById('userId').value,
+                fullName: document.getElementById('userName').value,
+                role: document.getElementById('userRole').value
+            };
+            fetch('/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(() => {
+                loadUsers(); // Tải lại bảng
+                document.getElementById('userId').value = '';
+                document.getElementById('userName').value = '';
+                document.getElementById('userRole').value = '';
+            });
+        }
+
+        // Lệnh Xóa User
+        function deleteUser(id) {
+            fetch('/api/users/' + id, { method: 'DELETE' }).then(() => loadUsers());
+        }
+
+        // Chạy lần đầu
+        loadUsers();
+    </script>
+</body>
+</html>

@@ -7,7 +7,8 @@ ApiClient::ApiClient(std::string ip, int p) : serverIp(ip), port(p) {}
 
 bool ApiClient::sendUnlockRequest(const std::string& camName, int userId, double distance) {
     httplib::Client cli(serverIp, port);
-    
+    cli.set_connection_timeout(0, 3000); 
+    cli.set_read_timeout(0, 3000);
     nlohmann::json j;
     j["cam_id"] = camName;
     j["user_id"] = userId;

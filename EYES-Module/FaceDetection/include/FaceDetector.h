@@ -5,13 +5,12 @@
 
 class FaceDetector {
 private:
-    cv::CascadeClassifier faceCascade;                 // Dùng để tìm mặt (Haar)
-    cv::Ptr<cv::face::LBPHFaceRecognizer> recognizer;  // Dùng để nhận diện (LBPH)
+    cv::CascadeClassifier faceCascade;
+    cv::Ptr<cv::face::LBPHFaceRecognizer> recognizer;
 
 public:
     FaceDetector();
-    // Hàm nạp 2 file mô hình từ thư mục models
     bool loadModels(const std::string& cascadePath, const std::string& lbphPath);
-    // Hàm mở camera và chạy nhận diện liên tục
-    void startCamera();
+    
+    bool detect(cv::Mat& frame, int& outId, double& outDistance); 
 };

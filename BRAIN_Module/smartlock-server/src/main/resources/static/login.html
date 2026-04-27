@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESTRICTED ACCESS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #030303;
+            color: #0f0;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .scanlines {
+            position: fixed; left: 0; top: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .login-box {
+            border: 1px solid #0f0;
+            padding: 40px;
+            background: rgba(0, 20, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2), inset 0 0 10px rgba(0, 255, 0, 0.1);
+            width: 350px;
+            position: relative;
+            z-index: 20;
+        }
+        h2 { text-align: center; margin-top: 0; font-size: 24px; text-shadow: 0 0 5px #0f0; letter-spacing: 2px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; margin-bottom: 5px; font-size: 14px; }
+        .input-group input {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid #0f0;
+            color: #0f0; font-family: 'Share Tech Mono', monospace; font-size: 16px; padding: 5px 0; outline: none;
+        }
+        .input-group input:focus { border-bottom: 2px solid #0f0; box-shadow: 0 5px 5px -5px #0f0; }
+        .btn-login {
+            width: 100%; background: transparent; border: 1px solid #0f0; color: #0f0;
+            padding: 10px; font-family: 'Share Tech Mono', monospace; font-size: 16px;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .btn-login:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
+        .warning { text-align: center; font-size: 11px; margin-top: 20px; color: #880000; }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="login-box">
+        <h2>[ SYSTEM LOGIN ]</h2>
+        <form action="/login" method="post">
+            <div class="input-group">
+                <label>>_ USERNAME</label>
+                <input type="text" name="username" required autocomplete="off" spellcheck="false">
+            </div>
+            <div class="input-group">
+                <label>>_ PASSWORD</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-login">Initialize Access</button>
+        </form>
+        <div class="warning">UNAUTHORIZED ACCESS IS STRICTLY PROHIBITED. <br>IP LOGGED AND TRACKED.</div>
+    </div>
+</body>
+</html>

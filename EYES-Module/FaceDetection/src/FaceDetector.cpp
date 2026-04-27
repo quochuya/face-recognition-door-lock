@@ -2,78 +2,48 @@
 #include <iostream>
 
 FaceDetector::FaceDetector() {
-    // Khởi tạo thuật toán LBPH
     recognizer = cv::face::LBPHFaceRecognizer::create();
 }
 
 bool FaceDetector::loadModels(const std::string& cascadePath, const std::string& lbphPath) {
     if (!faceCascade.load(cascadePath)) {
-        std::cout << "Loi: Khong the load Haar Cascade tu " << cascadePath << std::endl;
+        std::cout << "Loi: Khong the load Haar Cascade" << std::endl;
         return false;
     }
     try {
         recognizer->read(lbphPath);
     } catch (cv::Exception& e) {
-        std::cout << "Loi: Khong the load file YML tu " << lbphPath << std::endl;
+        std::cout << "Loi: Khong the load file YML" << std::endl;
         return false;
     }
     std::cout << "Tai mo hinh thanh cong!" << std::endl;
     return true;
 }
 
-void FaceDetector::startCamera() {
-    cv::VideoCapture cap(0); // 0 là camera mặc định
-    if (!cap.isOpened()) {
-        std::cout << "Loi: Khong the mo Camera!" << std::endl;
-        return;
-    }
+bool FaceDetector::detect(cv::Mat& frame, int& outId, double& outDistance) {
+    cv::Mat grayFrame;
+    cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
+    cv::equalizeHist(grayFrame, grayFrame); // Cân bằng sáng
 
-    cv::Mat frame, grayFrame;
-    std::cout << "He thong dang chay. Nhan ESC de thoat..." << std::endl;
+    std::vector<cv::Rect> faces;
+    // Siết chặt an ninh với minNeighbors = 8
+    faceCascade.detectMultiScale(grayFrame, faces, 1.2, 5, 0, cv::Size(80, 80));
 
-    while (true) {
-        cap >> frame;
-        if (frame.empty()) break;
+    if (faces.empty()) {
+        return false; // Báo không có mặt
+    } // <--- CHỐT CHẶN ĐÃ ĐƯỢC ĐÓNG NGOẶC AN TOÀN TẠI ĐÂY!
 
-        // 1. Tiền xử lý (Giống hệt lúc huấn luyện)
-        cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
-        cv::equalizeHist(grayFrame, grayFrame);
+    // Lấy khuôn mặt to nhất (đầu tiên)
+    cv::Mat faceROI = grayFrame(faces[0]); 
 
-        // 2. Tìm khuôn mặt
-        std::vector<cv::Rect> faces;
-        faceCascade.detectMultiScale(grayFrame, faces, 1.2, 5, 0, cv::Size(100, 100));
+    // AI tiến hành nhận diện
+    recognizer->predict(faceROI, outId, outDistance);
 
-        // 3. Xử lý từng khuôn mặt tìm được
-        for (const auto& face : faces) {
-            cv::Mat faceROI = grayFrame(face); // Cắt lấy vùng mặt
+    // --- BỔ SUNG LẠI HỌA SĨ VẼ KHUNG XANH ĐỂ HIỂN THỊ LÊN UI ---
+    cv::rectangle(frame, faces[0], cv::Scalar(0, 255, 0), 2);
+    cv::putText(frame, "ID: " + std::to_string(outId) + " | " + std::to_string((int)outDistance), 
+                cv::Point(faces[0].x, faces[0].y - 10), 
+                cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
 
-            int id = -1;
-            double distance = 0.0;
-            // 4. Nhận diện!
-            recognizer->predict(faceROI, id, distance);
-
-            // 5. Vẽ khung và hiển thị kết quả
-            cv::rectangle(frame, face, cv::Scalar(0, 255, 0), 2);
-            
-            std::string label = "Unknown";
-            cv::Scalar color = cv::Scalar(0, 0, 255); // Màu đỏ cho người lạ
-
-            // Distance (khoảng cách) càng nhỏ càng giống. Ngưỡng LBPH thường < 70 là an toàn
-            if (distance < 70.0) { 
-                if (id == 1) {
-                    label = "Admin (ID: 1)";
-                    color = cv::Scalar(0, 255, 0); // Màu xanh cho Admin
-        
-                }
-            }
-
-            // Ghi chữ lên màn hình
-            cv::putText(frame, label + " (Sai so: " + std::to_string((int)distance) + ")", 
-                        cv::Point(face.x, face.y - 10), 
-                        cv::FONT_HERSHEY_SIMPLEX, 0.7, color, 2);
-        }
-
-        cv::imshow("EYES Module - Security Camera", frame);
-        if (cv::waitKey(30) == 27) break; // Nhấn phím ESC để thoát
-    }
+    return true; // Báo là đã tìm thấy và nhận diện xong
 }

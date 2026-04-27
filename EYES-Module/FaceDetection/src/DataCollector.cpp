@@ -1,7 +1,21 @@
 #include "DataCollector.h"
 #include <iostream>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 void DataCollector::collect(int userId, const std::string& cascadePath, const std::string& savePath, int numImages) {
+    // Tạo thư mục dataset nếu chưa tồn tại
+    try {
+        if (!fs::exists(savePath)) {
+            fs::create_directories(savePath);
+            std::cout << "[INFO] Da tao thu muc: " << savePath << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cout << "Loi: Khong the tao thu muc dataset!" << e.what() << std::endl;
+        return;
+    }
+
     cv::CascadeClassifier faceCascade;
     if (!faceCascade.load(cascadePath)) {
         std::cout << "Loi: Khong the load Haar Cascade de chup anh!" << std::endl;
@@ -34,7 +48,11 @@ void DataCollector::collect(int userId, const std::string& cascadePath, const st
 
             count++;
             std::string filename = savePath + "/" + std::to_string(userId) + "." + std::to_string(count) + ".jpg";
-            cv::imwrite(filename, faceROI);
+            bool success = cv::imwrite(filename, faceROI);
+            
+            if (!success) {
+                std::cout << "[WARNING] Khong the luu file: " << filename << std::endl;
+            }
 
             cv::rectangle(frame, face, cv::Scalar(0, 255, 0), 2);
             cv::waitKey(100); // Dừng 0.1s giữa mỗi tấm để tạo độ khác biệt góc mặt

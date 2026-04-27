@@ -1,4 +1,4 @@
-package com.huy.smartlock_server;
+package com.huy.smartlock_server.dto;
 
 public class DetectionRequest {
     private String cam_id;

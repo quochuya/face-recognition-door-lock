@@ -4,13 +4,14 @@
 #include "include/FaceTrainer.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
+#include <atomic>
 #include <thread>
 #include <chrono>
 #include <httplib.h>
 #include <filesystem>
 #include <set>
-#include <mutex> // Thư viện dùng để khóa luồng
-
+#include <mutex>
+std::atomic<bool> keepCameraRunning{false};
 const std::string CASCADE_PATH = "../models/haarcascade_frontalface_default.xml";
 const std::string TRAINER_PATH = "../models/trainer.yml";
 const std::string DATASET_PATH = "../data/dataset";
@@ -42,8 +43,8 @@ void runCameraWorker(int camIndex, const std::string &camName, ApiClient &api)
 
     auto lastUnlockTime = std::chrono::steady_clock::now();
     bool isFirstTime = true;
-
-    while (true)
+    keepCameraRunning = true;
+    while (keepCameraRunning)
     {
         cap >> frame;
         if (frame.empty())
@@ -68,19 +69,22 @@ void runCameraWorker(int camIndex, const std::string &camName, ApiClient &api)
             auto currentTime = std::chrono::steady_clock::now();
             auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastUnlockTime).count();
 
-            if (isFirstTime || elapsedTime >= 3) 
+            if (isFirstTime || elapsedTime >= 3)
             {
                 // BƯỚC 2: CHỐT CHẶN BÓNG MA - CHỈ MỞ KHI SAI SỐ < 65.0
-                if (distance < 65.0) {
-                    std::cout << "[" << camName << "] Nhan dien ID: " << recognizedId 
+                if (distance < 65.0)
+                {
+                    std::cout << "[" << camName << "] Nhan dien ID: " << recognizedId
                               << " | Sai so: " << distance << " -> Dang goi API mo cua!" << std::endl;
-                    
+
                     api.sendUnlockRequest(camName, recognizedId, distance);
-                } else {
+                }
+                else
+                {
                     std::cout << "[WARNING] Thay mat nhung sai so qua cao (" << distance << "), tu choi mo cua!" << std::endl;
                 }
 
-                lastUnlockTime = currentTime; 
+                lastUnlockTime = currentTime;
                 isFirstTime = false;
             }
         }
@@ -120,7 +124,14 @@ int main()
             res.status = 400;
             res.set_content("{\"status\": \"error\"}", "application/json");
         } });
-
+    svr.Post("/stop_cam", [](const httplib::Request &req, httplib::Response &res)
+             {
+        std::cout << "\n[COMMAND] Nhan lenh tu Java: DUNG CAMERA!\n";
+        keepCameraRunning = false; // Kéo cầu dao xuống
+        
+        nlohmann::json responseJson;
+        responseJson["status"] = "success";
+        res.set_content(responseJson.dump(), "application/json"); });
     // --- ENDPOINT: CHỤP ẢNH CHO NGƯỜI DÙNG ---
     svr.Post("/collect_face_data", [](const httplib::Request &req, httplib::Response &res)
              {
@@ -166,7 +177,7 @@ int main()
 
     // --- ENDPOINT: KIỂM TRA DATASET ---
     svr.Get("/dataset_info", [](const httplib::Request &req, httplib::Response &res)
-             {
+            {
         try {
             namespace fs = std::filesystem;
             int fileCount = 0;
@@ -201,38 +212,44 @@ int main()
     std::cout << "[SYSTEM] Dang cho lenh mo Camera tu Java tai cong 8081...\n";
     std::cout << "[INFO] Dataset path: " << DATASET_PATH << "\n";
     std::cout << "[INFO] Trainer path: " << TRAINER_PATH << "\n";
-    
+
     // BƯỚC 3: ĐẨY SERVER LẮNG NGHE XUỐNG LUỒNG NGẦM ĐỂ TRÁNH TREO MÁY
-    std::thread([&svr]() {
-        svr.listen("0.0.0.0", 8081);
-    }).detach();
+    std::thread([&svr]()
+                { svr.listen("0.0.0.0", 8081); })
+        .detach();
 
     // BƯỚC 4: LUỒNG CHÍNH DÙNG ĐỂ VẼ GIAO DIỆN CAMERA
-    while (true) {
+    while (true)
+    {
         cv::Mat displayFrame;
         std::string winName;
 
         // Lấy khung hình mới nhất một cách an toàn
         {
             std::lock_guard<std::mutex> lock(frameMutex);
-            if (isCamActive && !globalFrame.empty()) {
+            if (isCamActive && !globalFrame.empty())
+            {
                 globalFrame.copyTo(displayFrame);
                 winName = activeCamName;
             }
         }
 
-        if (!displayFrame.empty()) {
+        if (!displayFrame.empty())
+        {
             cv::imshow(winName, displayFrame);
-        } else {
+        }
+        else
+        {
             // Hiển thị màn hình chờ cực ngầu nếu chưa có lệnh bật Camera
             cv::Mat standby = cv::Mat::zeros(480, 640, CV_8UC3);
-            cv::putText(standby, "WAITING FOR JAVA SIGNAL...", cv::Point(80, 240), 
+            cv::putText(standby, "WAITING FOR JAVA SIGNAL...", cv::Point(80, 240),
                         cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
             cv::imshow("SmartLock Dashboard", standby);
         }
 
         // Nhấn phím ESC để thoát toàn bộ chương trình
-        if (cv::waitKey(30) == 27) break; 
+        if (cv::waitKey(30) == 27)
+            break;
     }
 
     return 0;

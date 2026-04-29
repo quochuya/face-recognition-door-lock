@@ -7,5 +7,5 @@ import com.huy.smartlock_server.entity.Admin;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    // Có thể viết thêm hàm tìm admin theo username sau này
+    
 }

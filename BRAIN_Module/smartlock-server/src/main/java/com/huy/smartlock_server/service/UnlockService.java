@@ -22,13 +22,17 @@ public class UnlockService {
     @Autowired
     private AccessLogRepository accessLogRepository;
 
+    // 1. TIÊM THÊM VŨ KHÍ PHÁT SÓNG VÀO ĐÂY
+    @Autowired
+    private MqttService mqttService;
+
     public ResponseEntity<String> processUnlock(String cameraName, int userId, double distance) {
         
+
         // 1. Kiểm tra danh tính: Truy vấn thông tin người dùng từ Database
         Optional<User> userOptional = userRepository.findById(userId);
         
         if (userOptional.isEmpty()) {
-            // C++ gửi ID không tồn tại trong DB Web
             saveLog(cameraName, userId, "Unknown", distance, "DENIED_UNKNOWN_USER");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("DENIED: ID không tồn tại trong hệ thống.");
         }
@@ -41,24 +45,20 @@ public class UnlockService {
         boolean isNightTime = now.isAfter(LocalTime.of(22, 59)) || now.isBefore(LocalTime.of(6, 0));
 
         if (isNightTime) {
-            // Ban đêm: Chỉ ADMIN mới được mở
             if (!"ADMIN".equalsIgnoreCase(user.getRole())) {
                 System.out.println("[WARNING] An ninh: " + user.getFullName() + " cố gắng mở cửa trong giờ giới nghiêm!");
                 saveLog(cameraName, user.getId(), user.getFullName(), distance, "DENIED_CURFEW");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("DENIED: Đang trong giờ giới nghiêm. Chỉ Admin mới được mở.");
             }
         }
-
-        // 3. Hợp lệ hoàn toàn -> Cấp quyền mở cửa
         System.out.println("[SUCCESS] Mở cửa cho: " + user.getFullName() + " | Sai số: " + distance);
         saveLog(cameraName, user.getId(), user.getFullName(), distance, "ALLOWED");
-        
-        // (Gợi ý mở rộng: Gọi API MQTT xuống mạch ESP32/openHAB để mở khóa thực tế ở đây)
+        mqttService.sendUnlockCommand("huy_smartlock/locks/main");
 
         return ResponseEntity.ok("ALLOWED: " + user.getFullName());
     }
 
-    // Hàm phụ trợ ghi Log ra Database
+    // Hàm phụ trợ ghi Log ra Database giữ nguyên...
     private void saveLog(String camName, int userId, String userName, double distance, String status) {
         AccessLog log = new AccessLog();
         log.setCameraName(camName);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,260 +9,378 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #0f0; font-family: 'Share Tech Mono', monospace; }
-        h1, h2, h3, h4, h5, h6 { color: #0f0; text-shadow: 0 0 5px rgba(0,255,0,0.5); }
-        
-        /* Tactical Card Style */
-        .card { 
-            background: rgba(0, 15, 0, 0.7); 
-            border: 1px solid #0f0; 
-            border-radius: 0; 
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1); 
-        }
-        .card-header { border-bottom: 1px solid #0f0; background: transparent; }
-        
-        /* Inputs & Selects */
-        .form-control, .form-select { 
-            background: #000; color: #0f0; border: 1px solid #055; border-radius: 0; 
+        body {
+            background-color: #050505;
+            color: #0f0;
             font-family: 'Share Tech Mono', monospace;
         }
-        .form-control:focus, .form-select:focus { 
-            background: #000; color: #0f0; border-color: #0f0; box-shadow: 0 0 8px rgba(0,255,0,0.5); 
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #0f0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
         }
-        
+
+        /* Tactical Card Style */
+        .card {
+            background: rgba(0, 15, 0, 0.7);
+            border: 1px solid #0f0;
+            border-radius: 0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+        }
+
+        .card-header {
+            border-bottom: 1px solid #0f0;
+            background: transparent;
+        }
+
+        /* Inputs & Selects */
+        .form-control,
+        .form-select {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #055;
+            border-radius: 0;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: #000;
+            color: #0f0;
+            border-color: #0f0;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+        }
+
         /* Buttons */
-        .btn-cyber { 
-            background: transparent; border: 1px solid #0f0; color: #0f0; border-radius: 0; transition: 0.2s;
+        .btn-cyber {
+            background: transparent;
+            border: 1px solid #0f0;
+            color: #0f0;
+            border-radius: 0;
+            transition: 0.2s;
         }
-        .btn-cyber:hover { background: #0f0; color: #000; box-shadow: 0 0 10px #0f0; }
-        .btn-alert { border: 1px solid #f00; color: #f00; }
-        .btn-alert:hover { background: #f00; color: #000; box-shadow: 0 0 10px #f00; }
+
+        .btn-cyber:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        .btn-alert {
+            border: 1px solid #f00;
+            color: #f00;
+        }
+
+        .btn-alert:hover {
+            background: #f00;
+            color: #000;
+            box-shadow: 0 0 10px #f00;
+        }
 
         /* Tables */
-        .table { color: #0f0; border-color: #055; }
-        .table-light { background-color: rgba(0, 255, 0, 0.1); color: #0f0; }
-        .table-hover tbody tr:hover { background-color: rgba(0, 255, 0, 0.2); color: #fff; }
-        
+        .table {
+            color: #0f0;
+            border-color: #055;
+        }
+
+        .table-light {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: #0f0;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 255, 0, 0.2);
+            color: #fff;
+        }
+
         /* Tabs */
-        .nav-tabs { border-bottom: 1px solid #055; }
-        .nav-tabs .nav-link { color: #055; border: none; border-radius: 0; }
-        .nav-tabs .nav-link.active { background: transparent; color: #0f0; border-bottom: 2px solid #0f0; }
+        .nav-tabs {
+            border-bottom: 1px solid #055;
+        }
+
+        .nav-tabs .nav-link {
+            color: #055;
+            border: none;
+            border-radius: 0;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: transparent;
+            color: #0f0;
+            border-bottom: 2px solid #0f0;
+        }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #0f0; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-        .text-cyan { color: #0ff !important; text-shadow: 0 0 5px rgba(0,255,255,0.5); }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0f0;
+        }
+
+        .text-cyan {
+            color: #0ff !important;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
     </style>
 </head>
+
 <body>
 
-<div class="container-fluid py-4">
-    
-    <div class="row mb-4 border-bottom border-success pb-3 align-items-center">
-        <div class="col-8">
-            <h2 class="fw-bold m-0">> EYES_MODULE // SMART_LOCK_SYSTEM</h2>
-            <p class="text-muted m-0" style="color: #055 !important;">[OP_LEAD: Lê Quốc Huy | AUTH_LEVEL: ROOT]</p>
-        </div>
-        <div class="col-4 text-end">
-            <h4 class="text-cyan m-0 d-inline-block me-3" id="clock">00:00:00</h4>
-            <span class="badge border border-success text-success me-3">SYSTEM ONLINE</span>
-            <a href="/logout" class="btn btn-sm btn-outline-danger" style="font-family: monospace; border-radius: 0;">
-                [X] DISCONNECT
-            </a>
-        </div>
-    </div>
+    <div class="container-fluid py-4">
 
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card p-3 text-center border-start border-5 border-success">
-                <h6 style="color: #055;">REGISTERED ENTITIES</h6>
-                <h2 id="userCount" class="fw-bold m-0 text-cyan">0</h2>
+        <div class="row mb-4 border-bottom border-success pb-3 align-items-center">
+            <div class="col-8">
+                <h2 class="fw-bold m-0">> EYES_MODULE // SMART_LOCK_SYSTEM</h2>
+                <p class="text-muted m-0" style="color: #055 !important;">[OP_LEAD: Lê Quốc Huy | AUTH_LEVEL: ROOT]</p>
+            </div>
+            <div class="col-4 text-end">
+                <h4 class="text-cyan m-0 d-inline-block me-3" id="clock">00:00:00</h4>
+                <span class="badge border border-success text-success me-3">SYSTEM ONLINE</span>
+                <a href="/logout" class="btn btn-sm btn-outline-danger"
+                    style="font-family: monospace; border-radius: 0;">
+                    [X] DISCONNECT
+                </a>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card p-3 text-center border-start border-5" style="border-color: #0ff !important;">
-                <h6 style="color: #055;">ACCESS LOGS (TODAY)</h6>
-                <h2 id="accessCount" class="fw-bold m-0 text-cyan">0</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card p-3 text-center border-start border-5 border-success">
+                    <h6 style="color: #055;">REGISTERED ENTITIES</h6>
+                    <h2 id="userCount" class="fw-bold m-0 text-cyan">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 text-center border-start border-5" style="border-color: #0ff !important;">
+                    <h6 style="color: #055;">ACCESS LOGS (TODAY)</h6>
+                    <h2 id="accessCount" class="fw-bold m-0 text-cyan">0</h2>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card mb-4">
-                <div class="card-header"><i class="bi bi-webcam"></i> OVERRIDE: HARDWARE CONTROL</div>
-                <div class="card-body">
-                    <div class="d-grid gap-3">
-                        <button class="btn btn-cyber text-start" onclick="startCamera(0, 'CUA_CHINH')">
-                            > EXECUTE: INIT_CAM_01 [MAIN_DOOR]
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header"><i class="bi bi-webcam"></i> OVERRIDE: HARDWARE CONTROL</div>
+                    <div class="card-body">
+                        <div class="d-grid gap-3">
+                            <button id="btn-cam-0" class="btn btn-cyber text-start w-100"
+                                onclick="toggleCamera(0, 'CUA_CHINH')">
+                                > EXECUTE: INIT_CAM_01 [MAIN_DOOR]
+                            </button>
+                            <button id="btn-cam-1" class="btn btn-cyber text-start w-100"
+                                onclick="toggleCamera(1, 'CUA_SAU')">
+                                > EXECUTE: INIT_CAM_02 [BACK_DOOR]
+                            </button>
+                        </div>
+                        <div id="camStatus" class="mt-3 p-2 border border-success text-success"
+                            style="background: rgba(0,255,0,0.1); font-size: 0.85rem;">
+                            STATUS: WAITING FOR INSTRUCTION...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><i class="bi bi-person-lines-fill"></i> DATABASE INJECTION</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label small">>_ ID_TAG</label>
+                            <input type="number" id="userId" class="form-control" placeholder="[Numeric ID]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">>_ ALIAS / FULL NAME</label>
+                            <input type="text" id="userName" class="form-control" placeholder="[Subject Name]">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small">>_ CLEARANCE LEVEL</label>
+                            <select id="userRole" class="form-select">
+                                <option value="Admin">LEVEL 5 (ADMIN)</option>
+                                <option value="Sinh viên">LEVEL 1 (STUDENT)</option>
+                                <option value="Giảng viên">LEVEL 3 (STAFF)</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-cyber w-100" onclick="addUser()">
+                            [+] PUSH TO DATABASE
                         </button>
-                        <button class="btn btn-cyber text-start" onclick="startCamera(1, 'CUA_SAU')">
-                            > EXECUTE: INIT_CAM_02 [BACK_DOOR]
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#log-panel"
+                            onclick="loadLogs()">
+                            > LIVE_LOG_FEED
                         </button>
-                    </div>
-                    <div id="camStatus" class="mt-3 p-2 border border-success text-success" style="background: rgba(0,255,0,0.1); font-size: 0.85rem;">
-                        STATUS: WAITING FOR INSTRUCTION...
-                    </div>
-                </div>
-            </div>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-panel"
+                            onclick="loadUsers()">
+                            > KNOWN_ENTITIES
+                        </button>
+                    </li>
+                </ul>
 
-            <div class="card">
-                <div class="card-header"><i class="bi bi-person-lines-fill"></i> DATABASE INJECTION</div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label small">>_ ID_TAG</label>
-                        <input type="number" id="userId" class="form-control" placeholder="[Numeric ID]">
+                <div class="tab-content card p-3" style="min-height: 500px;">
+                    <div class="tab-pane fade show active" id="log-panel">
+                        <table class="table table-sm table-borderless table-hover">
+                            <thead class="border-bottom border-success">
+                                <tr>
+                                    <th>TIMESTAMP</th>
+                                    <th>SUBJECT</th>
+                                    <th>STATUS</th>
+                                    <th>CONFIDENCE_SCORE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logTable"></tbody>
+                        </table>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label small">>_ ALIAS / FULL NAME</label>
-                        <input type="text" id="userName" class="form-control" placeholder="[Subject Name]">
+
+                    <div class="tab-pane fade" id="user-panel">
+                        <table class="table table-sm table-borderless table-hover">
+                            <thead class="border-bottom border-success">
+                                <tr>
+                                    <th>ID_TAG</th>
+                                    <th>SUBJECT_NAME</th>
+                                    <th>CLEARANCE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTable"></tbody>
+                        </table>
                     </div>
-                    <div class="mb-4">
-                        <label class="form-label small">>_ CLEARANCE LEVEL</label>
-                        <select id="userRole" class="form-select">
-                            <option value="Admin">LEVEL 5 (ADMIN)</option>
-                            <option value="Sinh viên">LEVEL 1 (STUDENT)</option>
-                            <option value="Giảng viên">LEVEL 3 (STAFF)</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-cyber w-100" onclick="addUser()">
-                        [+] PUSH TO DATABASE
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8">
-            <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#log-panel" onclick="loadLogs()">
-                        > LIVE_LOG_FEED
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-panel" onclick="loadUsers()">
-                        > KNOWN_ENTITIES
-                    </button>
-                </li>
-            </ul>
-
-            <div class="tab-content card p-3" style="min-height: 500px;">
-                <div class="tab-pane fade show active" id="log-panel">
-                    <table class="table table-sm table-borderless table-hover">
-                        <thead class="border-bottom border-success">
-                            <tr><th>TIMESTAMP</th><th>SUBJECT</th><th>STATUS</th><th>CONFIDENCE_SCORE</th></tr>
-                        </thead>
-                        <tbody id="logTable"></tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="user-panel">
-                    <table class="table table-sm table-borderless table-hover">
-                        <thead class="border-bottom border-success">
-                            <tr><th>ID_TAG</th><th>SUBJECT_NAME</th><th>CLEARANCE</th><th>ACTION</th></tr>
-                        </thead>
-                        <tbody id="userTable"></tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // --- ĐỒNG HỒ DIGITAL ---
-    setInterval(() => {
-        const d = new Date();
-        document.getElementById('clock').innerText = d.toLocaleTimeString('vi-VN');
-    }, 1000);
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- ĐỒNG HỒ DIGITAL ---
+        setInterval(() => {
+            const d = new Date();
+            document.getElementById('clock').innerText = d.toLocaleTimeString('vi-VN');
+        }, 1000);
 
-    // --- QUẢN LÝ USER ---
-    function loadUsers() {
-        fetch('/api/users').then(res => res.json()).then(data => {
-            let html = '';
-            document.getElementById('userCount').innerText = data.length;
-            data.forEach(user => {
-                html += `<tr>
+        // --- QUẢN LÝ USER ---
+        function loadUsers() {
+            fetch('/api/users').then(res => res.json()).then(data => {
+                let html = '';
+                document.getElementById('userCount').innerText = data.length;
+                data.forEach(user => {
+                    html += `<tr>
                     <td>[${user.id}]</td>
                     <td class="text-cyan">${user.fullName}</td>
                     <td>${user.role}</td>
                     <td><button class="btn btn-alert btn-sm px-2 py-0" onclick="deleteUser(${user.id})">PURGE</button></td>
                 </tr>`;
+                });
+                document.getElementById('userTable').innerHTML = html;
             });
-            document.getElementById('userTable').innerHTML = html;
-        });
-    }
-
-    function addUser() {
-        const data = {
-            id: document.getElementById('userId').value,
-            fullName: document.getElementById('userName').value,
-            role: document.getElementById('userRole').value
-        };
-        fetch('/api/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        }).then(() => {
-            loadUsers();
-            document.getElementById('userId').value = '';
-            document.getElementById('userName').value = '';
-        });
-    }
-
-    function deleteUser(id) {
-        if(confirm('WARNING: PERMANENTLY PURGE THIS ENTITY?')) {
-            fetch('/api/users/' + id, { method: 'DELETE' }).then(() => loadUsers());
         }
-    }
 
-    // --- QUẢN LÝ LỊCH SỬ (LOGS) ---
-    function loadLogs() {
-        fetch('/api/logs').then(res => res.json()).then(data => {
-            let html = '';
-            document.getElementById('accessCount').innerText = data.length;
-            data.forEach(log => {
-                const isSuccess = log.status.includes('ALLOWED');
-                const statusColor = isSuccess ? 'text-success' : 'text-danger';
-                html += `<tr>
+        function addUser() {
+            const data = {
+                id: document.getElementById('userId').value,
+                fullName: document.getElementById('userName').value,
+                role: document.getElementById('userRole').value
+            };
+            fetch('/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(() => {
+                loadUsers();
+                document.getElementById('userId').value = '';
+                document.getElementById('userName').value = '';
+            });
+        }
+
+        function deleteUser(id) {
+            if (confirm('WARNING: PERMANENTLY PURGE THIS ENTITY?')) {
+                fetch('/api/users/' + id, { method: 'DELETE' }).then(() => loadUsers());
+            }
+        }
+
+        // --- QUẢN LÝ LỊCH SỬ (LOGS) ---
+        function loadLogs() {
+            fetch('/api/logs').then(res => res.json()).then(data => {
+                let html = '';
+                document.getElementById('accessCount').innerText = data.length;
+                data.forEach(log => {
+                    const isSuccess = log.status.includes('ALLOWED');
+                    const statusColor = isSuccess ? 'text-success' : 'text-danger';
+                    html += `<tr>
                     <td style="color: #055;">${new Date(log.accessTime).toLocaleString('vi-VN')}</td>
                     <td class="text-cyan">${log.userName}</td>
                     <td class="${statusColor}">${log.status}</td>
                     <td>${log.confidence.toFixed(2)}</td>
                 </tr>`;
+                });
+                document.getElementById('logTable').innerHTML = html;
             });
-            document.getElementById('logTable').innerHTML = html;
-        });
-    }
+        }
 
-    // --- ĐIỀU KHIỂN CAMERA ---
-    function startCamera(index, name) {
-        const statusDiv = document.getElementById('camStatus');
-        statusDiv.innerHTML = `<span class="spinner-border spinner-border-sm"></span> INITIATING CONNECTION TO ${name}...`;
-        statusDiv.className = "mt-3 p-2 border border-warning text-warning";
-        
+        // --- ĐIỀU KHIỂN CAMERA ---
+        // Biến toàn cục để nhớ trạng thái của từng Camera (đang bật hay tắt)
+let camStates = { 0: false, 1: false };
+
+function toggleCamera(index, name) {
+    const statusDiv = document.getElementById('camStatus');
+    const btn = document.getElementById('btn-cam-' + index);
+    const isRunning = camStates[index];
+
+    if (!isRunning) {
+        // --- LỆNH BẬT CAMERA ---
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> INITIATING...`;
         fetch('/api/camera/start', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ cam_index: index, cam_name: name })
-        })
-        .then(res => {
+        }).then(res => {
             if (res.ok) {
-                statusDiv.innerHTML = "SYSTEM ROOT COMPROMISED... JUST KIDDING. " + name + " IS LIVE.";
+                camStates[index] = true; // Cập nhật trạng thái
+                btn.innerHTML = `[X] TERMINATE_CAM: ${name}`; // Đổi chữ
+                btn.className = "btn btn-alert text-start w-100"; // Đổi sang màu đỏ
+                statusDiv.innerHTML = `STATUS: ${name} IS LIVE & MONITORING.`;
                 statusDiv.className = "mt-3 p-2 border border-success text-success";
-            } else {
-                statusDiv.innerHTML = "ERR: CONNECTION REFUSED BY TARGET NODE.";
-                statusDiv.className = "mt-3 p-2 border border-danger text-danger";
+            }
+        });
+    } else {
+        // --- LỆNH TẮT CAMERA ---
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> SHUTTING DOWN...`;
+        fetch('/api/camera/stop', { // Sẽ gọi sang 1 API mới của Java
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cam_index: index, cam_name: name })
+        }).then(res => {
+            if (res.ok) {
+                camStates[index] = false;
+                btn.innerHTML = `> EXECUTE: INIT_CAM_0${index + 1} [${name}]`;
+                btn.className = "btn btn-cyber text-start w-100"; // Đổi lại màu xanh ngầu
+                statusDiv.innerHTML = `STATUS: ${name} OFFLINE. STANDBY MODE.`;
+                statusDiv.className = "mt-3 p-2 border border-warning text-warning";
             }
         });
     }
+}
 
-    // Init
-    loadLogs();
-    setInterval(loadLogs, 3000); // Quét log 3 giây 1 lần cho chuẩn tác phong đặc vụ
-</script>
+        // Init
+        loadLogs();
+        setInterval(loadLogs, 3000); // Quét log 3 giây 1 lần cho chuẩn tác phong đặc vụ
+    </script>
 </body>
+
 </html>

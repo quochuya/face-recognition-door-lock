@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
+// @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -17,26 +17,24 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
-                // 1. Phân luồng giao thông
                 .authorizeHttpRequests(auth -> auth
-                        // Cấp quyền cho API, trang Login và các tài nguyên tĩnh (cực kỳ quan trọng)
-                        .requestMatchers("/api/unlock", "/api/add_cam", "/login.html", "/error").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        // Cấp quyền cho API
+                        .requestMatchers("/api/**", "/login.html", "/error", "/css/**", "/js/**").permitAll()
+                        .anyRequest().authenticated())
 
                 // 2. Cấu hình Form Login
                 .formLogin(form -> form
-                        .loginPage("/login.html")         // Trỏ thẳng vào file tĩnh trong thư mục static
-                        .loginProcessingUrl("/login")     // Báo cho Spring biết form HTML sẽ gửi dữ liệu POST vào đây
+                        .loginPage("/login.html") // Trỏ thẳng vào file tĩnh trong thư mục static
+                        .loginProcessingUrl("/login") // Báo cho Spring biết form HTML sẽ gửi dữ liệu POST vào đây
                         .defaultSuccessUrl("/index.html", true) // Đăng nhập xong thì vào bảng điều khiển
-                        .permitAll()
-                )
-                
+                        .permitAll())
+
                 // 3. Cho phép Đăng xuất
                 .logout(logout -> logout.permitAll());
 
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -30,10 +30,8 @@ void FaceTrainer::trainModel(const std::string& datasetPath, const std::string& 
             continue;
         }
 
-        // 2. Cân bằng ánh sáng (Histogram Equalization) 
         cv::equalizeHist(img, img);
 
-        // 3. Cắt lấy ID từ tên file (Ví dụ: "1.15.jpg" -> ID = 1)
         try {
             int id = std::stoi(filename.substr(0, filename.find('.')));
             images.push_back(img);
@@ -53,11 +51,9 @@ void FaceTrainer::trainModel(const std::string& datasetPath, const std::string& 
     std::cout << "[INFO] Tim thay " << imageCount << " buc anh tu " << labels.size() << " nhan" << std::endl;
     std::cout << "[INFO] Dang huan luyen mo hinh LBPH..." << std::endl;
     
-    // 4. Khởi tạo và Train thuật toán LBPH
     cv::Ptr<cv::face::LBPHFaceRecognizer> model = cv::face::LBPHFaceRecognizer::create();
     model->train(images, labels);
     
-    // 5. Lưu kết quả ra file yml
     try {
         model->save(savePath);
         std::cout << "[SUCCESS] Mo hinh da duoc huan luyen va luu tai: " << savePath << std::endl;

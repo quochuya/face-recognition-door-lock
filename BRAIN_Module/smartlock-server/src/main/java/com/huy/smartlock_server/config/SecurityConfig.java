@@ -24,12 +24,11 @@ public class SecurityConfig {
 
                 // 2. Cấu hình Form Login
                 .formLogin(form -> form
-                        .loginPage("/login.html") // Trỏ thẳng vào file tĩnh trong thư mục static
-                        .loginProcessingUrl("/login") // Báo cho Spring biết form HTML sẽ gửi dữ liệu POST vào đây
-                        .defaultSuccessUrl("/index.html", true) // Đăng nhập xong thì vào bảng điều khiển
+                        .loginPage("/login.html") 
+                        .loginProcessingUrl("/login") 
+                        .defaultSuccessUrl("/index.html", true) 
                         .permitAll())
 
-                // 3. Cho phép Đăng xuất
                 .logout(logout -> logout.permitAll());
 
         return http.build();

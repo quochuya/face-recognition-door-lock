@@ -44,7 +44,7 @@ void DataCollector::collect(int userId, const std::string& cascadePath, const st
         for (const auto& face : faces) {
             // Chỉ lấy đúng vùng khuôn mặt
             cv::Mat faceROI = grayFrame(face);
-            cv::equalizeHist(faceROI, faceROI); // Cân bằng sáng ngay từ lúc chụp
+            cv::equalizeHist(faceROI, faceROI); 
 
             count++;
             std::string filename = savePath + "/" + std::to_string(userId) + "." + std::to_string(count) + ".jpg";
@@ -55,7 +55,7 @@ void DataCollector::collect(int userId, const std::string& cascadePath, const st
             }
 
             cv::rectangle(frame, face, cv::Scalar(0, 255, 0), 2);
-            cv::waitKey(100); // Dừng 0.1s giữa mỗi tấm để tạo độ khác biệt góc mặt
+            cv::waitKey(100);
         }
 
         cv::imshow("Thu thap du lieu (Data Collector)", frame);

@@ -14,26 +14,15 @@ public class LockController {
     @Autowired
     private UnlockService unlockService;
 
-    // Endpoint nhận tín hiệu từ mô-đun C++
     @PostMapping("/detect")
     public ResponseEntity<String> requestUnlock(@RequestBody UnlockRequestDto request) {
         
         System.out.println("\n[API] Sign from camera: " + request.getCameraName() 
-                         + " | ID: " + request.getUserId() + " | Sai số: " + request.getDistance());
-
-        // Đẩy toàn bộ dữ liệu xuống Service xử lý và trả kết quả thẳng về C++
+                         + " | ID: " + request.getUserId() + " | Distance: " + request.getDistance());
         return unlockService.processUnlock(
                 request.getCameraName(),
                 request.getUserId(),
                 request.getDistance()
         );
-    }
-    @Autowired
-    private AccessLogRepository logRepository; // Gọi cái Repository bạn đã dùng để lưu log lúc nãy
-
-    @GetMapping("/logs")
-    public ResponseEntity<?> getAllLogs() {
-        // Lấy tất cả lịch sử, có thể thêm Sort để thằng nào mới nhất hiện lên trên
-        return ResponseEntity.ok(logRepository.findAll()); 
     }
 }

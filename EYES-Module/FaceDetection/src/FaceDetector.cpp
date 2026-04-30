@@ -23,23 +23,19 @@ bool FaceDetector::loadModels(const std::string& cascadePath, const std::string&
 bool FaceDetector::detect(cv::Mat& frame, int& outId, double& outDistance) {
     cv::Mat grayFrame;
     cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
-    cv::equalizeHist(grayFrame, grayFrame); // Cân bằng sáng
+    cv::equalizeHist(grayFrame, grayFrame); 
 
     std::vector<cv::Rect> faces;
-    // Siết chặt an ninh với minNeighbors = 8
     faceCascade.detectMultiScale(grayFrame, faces, 1.2, 5, 0, cv::Size(80, 80));
 
     if (faces.empty()) {
-        return false; // Báo không có mặt
-    } // <--- CHỐT CHẶN ĐÃ ĐƯỢC ĐÓNG NGOẶC AN TOÀN TẠI ĐÂY!
+        return false; 
+    } 
 
-    // Lấy khuôn mặt to nhất (đầu tiên)
     cv::Mat faceROI = grayFrame(faces[0]); 
 
-    // AI tiến hành nhận diện
     recognizer->predict(faceROI, outId, outDistance);
 
-    // --- BỔ SUNG LẠI HỌA SĨ VẼ KHUNG XANH ĐỂ HIỂN THỊ LÊN UI ---
     cv::rectangle(frame, faces[0], cv::Scalar(0, 255, 0), 2);
     cv::putText(frame, "ID: " + std::to_string(outId) + " | " + std::to_string((int)outDistance), 
                 cv::Point(faces[0].x, faces[0].y - 10), 

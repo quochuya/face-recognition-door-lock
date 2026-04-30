@@ -82,5 +82,4 @@ cd d:\FinalWave\face-recognition-door-lock
 .\setup_and_train.ps1
 ```
 
----
 

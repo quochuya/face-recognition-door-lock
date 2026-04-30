@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "access_logs")
-@Data // Tự động sinh toàn bộ Getters/Setters
-@NoArgsConstructor // Tự động sinh Constructor rỗng bắt buộc của JPA
+@Data 
+@NoArgsConstructor 
 public class AccessLog {
 
     @Id

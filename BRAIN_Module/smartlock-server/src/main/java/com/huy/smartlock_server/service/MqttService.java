@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MqttService {
-    // Trạm trung chuyển đám mây (Giống hệt bên ESP32)
     private static final String BROKER_URL = "tcp://broker.emqx.io:1883";
-    private static final String CLIENT_ID = "Java_Backend_Commander";
+    private static final String CLIENT_ID = "Java_Backend_Commander_" + System.currentTimeMillis();
 
     public void sendUnlockCommand(String topic) {
         try {
@@ -23,11 +22,11 @@ public class MqttService {
             
             // Bóp cò phát sóng
             client.publish(topic, message);
-            System.out.println("[MQTT] Đã bắn lệnh 'OPEN' vào kênh: " + topic);
+            System.out.println("[MQTT] Command sent to topic: " + topic);
             
             client.disconnect();
         } catch (MqttException e) {
-            System.err.println("[MQTT ERROR] Lỗi phát sóng: " + e.getMessage());
+            System.err.println("[MQTT ERROR] Command failed: " + e.getMessage());
         }
     }
 }

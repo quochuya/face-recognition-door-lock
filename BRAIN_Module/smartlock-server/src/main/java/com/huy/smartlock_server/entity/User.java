@@ -9,11 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Data
 public class User {
     @Id
-    // Giữ nguyên: Không dùng @GeneratedValue để tự đồng bộ ID với OpenCV
     private Integer id; 
 
-    @Column(name = "full_name") // Ép Spring Boot phải tìm đúng cột 'full_name' trong MySQL
-    @JsonProperty("fullName")   // Ép Spring Boot khi gửi JSON ra Web phải dùng chữ 'fullName'
+    @Column(name = "full_name") 
+    @JsonProperty("fullName")  
     private String fullName;
 
     @JsonProperty("role")

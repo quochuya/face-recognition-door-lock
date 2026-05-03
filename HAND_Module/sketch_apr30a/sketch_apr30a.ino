@@ -4,13 +4,15 @@
 const char* ssid = "Galaxy A12 F315";
 const char* password = "Lequochuy";
 
-
 const char* mqtt_server = "broker.emqx.io";
 
 const int lockPin = 2; 
 
 WiFiClient espClient;
 PubSubClient client(espClient);
+
+unsigned long openTime = 0;   
+bool isAutoOpening = false;   
 
 void setup_wifi() {
   delay(10);
@@ -42,29 +44,35 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("[COMMAND] Lệnh nhận được: ");
   Serial.println(message);
 
-
   if (String(topic) == "huy_smartlock/locks/main") {
+    
     if (message == "OPEN") {
-      Serial.println("=> [ACTION] MỞ CỬA! (Bật Relay)");
-      digitalWrite(lockPin, HIGH);
-      
-      // Giữ cửa mở trong 3 giây
-      delay(3000); 
-      
-      Serial.println("=> [ACTION] ĐÓNG CỬA! (Tắt Relay)");
-      digitalWrite(lockPin, LOW); 
+      Serial.println("=> [ACTION] AI MỞ CỬA! (Sẽ tự đóng sau 3s)");
+      digitalWrite(lockPin, HIGH); 
+      isAutoOpening = true;        
+      openTime = millis();         
+    } 
+    
+    else if (message == "FORCE_OPEN") {
+      Serial.println("=> [ACTION] ADMIN MỞ CỬA! (Giữ nguyên mở)");
+      digitalWrite(lockPin, HIGH); 
+      isAutoOpening = false;       
+    }
+    
+
+    else if (message == "FORCE_CLOSE") {
+      Serial.println("=> [ACTION] ADMIN ĐÓNG CỬA KHẨN CẤP!");
+      digitalWrite(lockPin, LOW);  
+      isAutoOpening = false;      
     }
   }
 }
 
-// Hàm tự động kết nối lại nếu rớt mạng MQTT
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Đang kết nối tới MQTT Broker... ");
-    // Tạo một cái tên định danh cho ESP32
     if (client.connect("ESP32_SmartLock_Client")) {
       Serial.println("THÀNH CÔNG!");
-      // Đăng ký nhận tin nhắn từ kênh của cửa chính
       client.subscribe("huy_smartlock/locks/main");
     } else {
       Serial.print("THẤT BẠI, mã lỗi = ");
@@ -76,15 +84,15 @@ void reconnect() {
 }
 
 void setup() {
-  Serial.begin(115200); // Khởi tạo Serial Monitor với tốc độ 115200
+  Serial.begin(115200); 
   
   pinMode(lockPin, OUTPUT);
-  digitalWrite(lockPin, LOW); // Mặc định vừa bật lên là khóa cửa
+  digitalWrite(lockPin, LOW); 
 
   setup_wifi();
   
   // Thiết lập MQTT
-  client.setServer(mqtt_server, 1883); // Cổng mặc định của MQTT là 1883
+  client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
 }
 
@@ -92,5 +100,12 @@ void loop() {
   if (!client.connected()) {
     reconnect();
   }
-  client.loop(); // Lệnh này giúp ESP32 luôn lắng nghe tín hiệu
+  client.loop(); 
+
+
+  if (isAutoOpening && (millis() - openTime >= 3000)) {
+    Serial.println("=> [ACTION] TỰ ĐỘNG ĐÓNG CỬA (Hết 3s)!");
+    digitalWrite(lockPin, LOW);  
+    isAutoOpening = false;       
+  }
 }

@@ -29,4 +29,24 @@ public class MqttService {
             System.err.println("[MQTT ERROR] Command failed: " + e.getMessage());
         }
     }
+    public void sendAdminOverrideCommand(String topic, String actionCommand) {
+        try {
+            MqttClient client = new MqttClient(BROKER_URL, CLIENT_ID + "_admin"); 
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setCleanSession(true);
+            
+            client.connect(options);
+            
+            MqttMessage message = new MqttMessage(actionCommand.getBytes());
+            message.setQos(1); 
+            
+
+            client.publish(topic, message);
+            System.out.println("[MQTT] Admin override executed. Command: [" + actionCommand + "] sent to topic: " + topic);
+            
+            client.disconnect();
+        } catch (MqttException e) {
+            System.err.println("[MQTT ERROR] Admin override failed: " + e.getMessage());
+        }
+    }
 }

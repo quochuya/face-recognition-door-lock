@@ -173,7 +173,27 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-header"><i class="bi bi-webcam"></i> OVERRIDE: HARDWARE CONTROL</div>
+                    <!-- BEGIN: DOOR CONTROL MODULE -->
+                <div class="card mb-4" style="border-color: #0ff;">
+                    <div class="card-header text-cyan border-info">
+                        <i class="bi bi-door-open"></i> OVERRIDE: DOOR ACCESS
+                    </div>
                     <div class="card-body">
+                        <div class="d-grid gap-3">
+                            <button class="btn btn-cyber text-start w-100" style="color: #0ff; border-color: #0ff;"
+                                onclick="overrideDoor('OPEN')">
+                                > COMMAND: FORCE_OPEN_DOOR
+                            </button>
+                            <button class="btn btn-alert text-start w-100"
+                                onclick="overrideDoor('CLOSE')">
+                                > COMMAND: FORCE_CLOSE_DOOR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: DOOR CONTROL MODULE -->
+                    <div class="card-body">
+
                         <div class="d-grid gap-3">
                             <button id="btn-cam-0" class="btn btn-cyber text-start w-100"
                                 onclick="toggleCamera(0, 'CUA_CHINH')">
@@ -205,9 +225,8 @@
                         <div class="mb-4">
                             <label class="form-label small">>_ CLEARANCE LEVEL</label>
                             <select id="userRole" class="form-select">
-                                <option value="Admin">LEVEL 5 (ADMIN)</option>
-                                <option value="Sinh viên">LEVEL 1 (STUDENT)</option>
-                                <option value="Giảng viên">LEVEL 3 (STAFF)</option>
+                                <option value="Admin">ADMIN</option>
+                                <option value="Staff">STAFF</option>
                             </select>
                         </div>
                         <button class="btn btn-cyber w-100" onclick="addUser()">
@@ -314,7 +333,22 @@
                 fetch('/api/users/' + id, { method: 'DELETE' }).then(() => loadUsers());
             }
         }
-
+        // ĐIỀU KHIỂN CỬA THỦ CÔNG (OVERRIDE)
+        function overrideDoor(command) {
+            if (confirm(`WARNING: TACTICAL OVERRIDE INITIATED.\nEXECUTE COMMAND [${command} DOOR]?`)) {
+                fetch('/api/override', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: command })
+                }).then(res => {
+                    if (res.ok) {
+                        loadLogs(0); 
+                    } else {
+                        alert('ERROR: CONNECTION TO BROKER FAILED.');
+                    }
+                });
+            }
+        }
         // --- QUẢN LÝ LỊCH SỬ (LOGS) ---
         let currentLogPage = 0; 
 
@@ -323,7 +357,7 @@
                 .then(res => res.json())
                 .then(data => {
                     let html = '';
-
+                    document.getElementById('accessCount').innerText = data.totalElements || data.length || 0;
                     data.content.forEach(log => {
                         html += `<tr>
                     <td>${log.accessTime || log.timestamp}</td>

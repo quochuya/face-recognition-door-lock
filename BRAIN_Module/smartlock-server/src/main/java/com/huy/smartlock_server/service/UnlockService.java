@@ -26,30 +26,33 @@ public class UnlockService {
     private MqttService mqttService;
 
     public ResponseEntity<String> processUnlock(String cameraName, int userId, double distance) {
-        
 
-        // Kiểm tra danh tính: Truy vấn thông tin người dùng từ Database
+    
         Optional<User> userOptional = userRepository.findById(userId);
         
         if (userOptional.isEmpty()) {
-            saveLog(cameraName, userId, "Unknown", distance, "DENIED_UNKNOWN_USER");
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("DENIED: ID không tồn tại trong hệ thống.");
+       
+            System.out.println("[SECURITY ALERT]: Phat hien ID " + userId + " da bi vo hieu hoa dang co gang mo cua!");
+            saveLog(cameraName, userId, "Người dùng đã bị xóa", distance, "DENIED_DEACTIVATED");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("DENIED: Tài khoản đã bị vô hiệu hóa hoặc không tồn tại.");
         }
 
         User user = userOptional.get();
 
-        //Kiểm tra giờ giới nghiêm
+        // Bước 2: Kiểm tra giờ giới nghiêm (23:00 - 06:00)
         LocalTime now = LocalTime.now();
         boolean isNightTime = now.isAfter(LocalTime.of(22, 59)) || now.isBefore(LocalTime.of(6, 0));
 
         if (isNightTime) {
             if (!"ADMIN".equalsIgnoreCase(user.getRole())) {
-                System.out.println("[WARNING]: " + user.getFullName() + "try to unlock during curfew hours. Access denied.");
+                System.out.println("[WARNING]: " + user.getFullName() + " try to unlock during curfew hours. Access denied.");
                 saveLog(cameraName, user.getId(), user.getFullName(), distance, "DENIED_CURFEW");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("DENIED: Only ADMIN can unlock during curfew hours.");
             }
         }
-        System.out.println("[SUCCESS] Open for : " + user.getFullName() + " |Distance: " + distance);
+
+        // Bước 3: Cho phép mở cửa
+        System.out.println("[SUCCESS] Open for: " + user.getFullName() + " | Distance: " + distance);
         saveLog(cameraName, user.getId(), user.getFullName(), distance, "ALLOWED");
         mqttService.sendUnlockCommand("huy_smartlock/locks/main");
 
@@ -62,8 +65,8 @@ public class UnlockService {
         log.setUserId(userId);
         log.setUserName(userName);
         log.setConfidence(distance);
-        log.setStatus(status);
         log.setTimestamp(LocalDateTime.now());
+        log.setStatus(status);
         
         accessLogRepository.save(log);
     }

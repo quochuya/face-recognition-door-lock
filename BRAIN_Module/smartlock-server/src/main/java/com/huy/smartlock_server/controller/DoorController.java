@@ -17,7 +17,6 @@ public class DoorController {
     @Autowired
     private MqttService mqttService;
 
-    // Autowired cái Repository quản lý Database của bạn vào đây
     @Autowired
     private AccessLogRepository logRepository; 
 

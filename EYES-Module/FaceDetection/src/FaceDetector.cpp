@@ -20,7 +20,12 @@ bool FaceDetector::loadModels(const std::string& cascadePath, const std::string&
     return true;
 }
 
-bool FaceDetector::detect(cv::Mat& frame, int& outId, double& outDistance) {
+
+bool FaceDetector::detect(cv::Mat& frame, int& outId, double& outDistance) 
+{
+    outId = -1;
+    outDistance = 999.0;
+
     cv::Mat grayFrame;
     cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(grayFrame, grayFrame); 
@@ -34,12 +39,29 @@ bool FaceDetector::detect(cv::Mat& frame, int& outId, double& outDistance) {
 
     cv::Mat faceROI = grayFrame(faces[0]); 
 
-    recognizer->predict(faceROI, outId, outDistance);
+    // Dự đoán
+    int predictedLabel = -1;
+    double confidence = 0.0;
+    recognizer->predict(faceROI, predictedLabel, confidence);
 
-    cv::rectangle(frame, faces[0], cv::Scalar(0, 255, 0), 2);
-    cv::putText(frame, "ID: " + std::to_string(outId) + " | " + std::to_string((int)outDistance), 
+    outId = predictedLabel;
+    outDistance = confidence;
+
+   
+    const double THRESHOLD = 70.0;   
+
+    bool isKnownFace = (predictedLabel > 0 && confidence < THRESHOLD);
+
+
+    cv::Scalar color = isKnownFace ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255);
+    std::string labelText = isKnownFace 
+        ? "ID: " + std::to_string(predictedLabel) + " | " + std::to_string((int)confidence)
+        : "UNKNOWN | " + std::to_string((int)confidence);
+
+    cv::rectangle(frame, faces[0], color, 2);
+    cv::putText(frame, labelText, 
                 cv::Point(faces[0].x, faces[0].y - 10), 
-                cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0, 255, 0), 2);
+                cv::FONT_HERSHEY_SIMPLEX, 0.6, color, 2);
 
-    return true; // Báo là đã tìm thấy và nhận diện xong
+    return isKnownFace;  
 }

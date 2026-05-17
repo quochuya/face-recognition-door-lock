@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TACTICAL COMMAND | EYES-MODULE</title>
+    <title>Bảng điều khiển hệ thống</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #050505;
-            color: #0f0;
-            font-family: 'Share Tech Mono', monospace;
+            background-color: #f4f6f9;
+            color: #333;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         h1,
@@ -21,116 +20,83 @@
         h4,
         h5,
         h6 {
-            color: #0f0;
-            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            color: #2c3e50;
         }
 
-        /* Tactical Card Style */
+        /* Card Style */
         .card {
-            background: rgba(0, 15, 0, 0.7);
-            border: 1px solid #0f0;
-            border-radius: 0;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .card-header {
-            border-bottom: 1px solid #0f0;
-            background: transparent;
+            border-bottom: 1px solid #e0e0e0;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #0056b3;
         }
 
         /* Inputs & Selects */
         .form-control,
         .form-select {
-            background: #000;
-            color: #0f0;
-            border: 1px solid #055;
-            border-radius: 0;
-            font-family: 'Share Tech Mono', monospace;
+            background: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         .form-control:focus,
         .form-select:focus {
-            background: #000;
-            color: #0f0;
-            border-color: #0f0;
-            box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.25);
         }
 
         /* Buttons */
-        .btn-cyber {
-            background: transparent;
-            border: 1px solid #0f0;
-            color: #0f0;
-            border-radius: 0;
+        .btn-primary-custom {
+            background: #0056b3;
+            border: none;
+            color: #fff;
             transition: 0.2s;
         }
 
-        .btn-cyber:hover {
-            background: #0f0;
-            color: #000;
-            box-shadow: 0 0 10px #0f0;
+        .btn-primary-custom:hover {
+            background: #004494;
+            color: #fff;
         }
 
-        .btn-alert {
-            border: 1px solid #f00;
-            color: #f00;
+        .btn-danger-custom {
+            background: #dc3545;
+            border: none;
+            color: #fff;
         }
 
-        .btn-alert:hover {
-            background: #f00;
-            color: #000;
-            box-shadow: 0 0 10px #f00;
+        .btn-danger-custom:hover {
+            background: #c82333;
+            color: #fff;
         }
 
         /* Tables */
         .table {
-            color: #0f0;
-            border-color: #055;
-        }
-
-        .table-light {
-            background-color: rgba(0, 255, 0, 0.1);
-            color: #0f0;
+            color: #333;
         }
 
         .table-hover tbody tr:hover {
-            background-color: rgba(0, 255, 0, 0.2);
-            color: #fff;
+            background-color: #f1f3f5;
         }
 
         /* Tabs */
-        .nav-tabs {
-            border-bottom: 1px solid #055;
-        }
-
         .nav-tabs .nav-link {
-            color: #055;
-            border: none;
-            border-radius: 0;
+            color: #495057;
+            font-weight: bold;
         }
 
         .nav-tabs .nav-link.active {
-            background: transparent;
-            color: #0f0;
-            border-bottom: 2px solid #0f0;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #0f0;
-        }
-
-        .text-cyan {
-            color: #0ff !important;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            color: #0056b3;
+            border-bottom: 3px solid #0056b3;
+            background-color: transparent;
         }
     </style>
 </head>
@@ -139,32 +105,30 @@
 
     <div class="container-fluid py-4">
 
-        <div class="row mb-4 border-bottom border-success pb-3 align-items-center">
+        <div class="row mb-4 border-bottom pb-3 align-items-center">
             <div class="col-8">
-                <h2 class="fw-bold m-0">> EYES_MODULE // SMART_LOCK_SYSTEM</h2>
-                <p class="text-muted m-0" style="color: #055 !important;">[OP_LEAD: Lê Quốc Huy | AUTH_LEVEL: ROOT]</p>
+                <h3 class="fw-bold m-0 text-primary">HỆ THỐNG KIỂM SOÁT CỬA RA VÀO</h3>
             </div>
             <div class="col-4 text-end">
-                <h4 class="text-cyan m-0 d-inline-block me-3" id="clock">00:00:00</h4>
-                <span class="badge border border-success text-success me-3">SYSTEM ONLINE</span>
-                <a href="/logout" class="btn btn-sm btn-outline-danger"
-                    style="font-family: monospace; border-radius: 0;">
-                    [X] DISCONNECT
+                <h4 class="text-dark m-0 d-inline-block me-3" id="clock">00:00:00</h4>
+                <span class="badge bg-success me-3">Đang hoạt động</span>
+                <a href="/logout" class="btn btn-sm btn-outline-danger">
+                    Đăng xuất
                 </a>
             </div>
         </div>
 
         <div class="row mb-4">
             <div class="col-md-3">
-                <div class="card p-3 text-center border-start border-5 border-success">
-                    <h6 style="color: #055;">REGISTERED ENTITIES</h6>
-                    <h2 id="userCount" class="fw-bold m-0 text-cyan">0</h2>
+                <div class="card p-3 text-center border-start border-4 border-primary">
+                    <h6 class="text-muted">TỔNG SỐ THÀNH VIÊN</h6>
+                    <h2 id="userCount" class="fw-bold m-0 text-primary">0</h2>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card p-3 text-center border-start border-5" style="border-color: #0ff !important;">
-                    <h6 style="color: #055;">ACCESS LOGS (TODAY)</h6>
-                    <h2 id="accessCount" class="fw-bold m-0 text-cyan">0</h2>
+                <div class="card p-3 text-center border-start border-4 border-info">
+                    <h6 class="text-muted">LƯỢT RA VÀO HÔM NAY</h6>
+                    <h2 id="accessCount" class="fw-bold m-0 text-info">0</h2>
                 </div>
             </div>
         </div>
@@ -172,65 +136,58 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
-                    <div class="card-header"><i class="bi bi-webcam"></i> OVERRIDE: HARDWARE CONTROL</div>
-                    <!-- BEGIN: DOOR CONTROL MODULE -->
-                <div class="card mb-4" style="border-color: #0ff;">
-                    <div class="card-header text-cyan border-info">
-                        <i class="bi bi-door-open"></i> OVERRIDE: DOOR ACCESS
-                    </div>
+                    <div class="card-header"><i class="bi bi-door-open"></i> ĐIỀU KHIỂN KHẨN CẤP</div>
                     <div class="card-body">
                         <div class="d-grid gap-3">
-                            <button class="btn btn-cyber text-start w-100" style="color: #0ff; border-color: #0ff;"
-                                onclick="overrideDoor('OPEN')">
-                                > COMMAND: FORCE_OPEN_DOOR
+                            <button class="btn btn-primary-custom text-start w-100 p-2" onclick="overrideDoor('OPEN')">
+                                 MỞ CỬA CƯỠNG CHẾ
                             </button>
-                            <button class="btn btn-alert text-start w-100"
-                                onclick="overrideDoor('CLOSE')">
-                                > COMMAND: FORCE_CLOSE_DOOR
+                            <button class="btn btn-danger-custom text-start w-100 p-2" onclick="overrideDoor('CLOSE')">
+                                 KHÓA CỬA CƯỠNG CHẾ
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- END: DOOR CONTROL MODULE -->
-                    <div class="card-body">
 
+                <div class="card mb-4">
+                    <div class="card-header"></i> ĐIỀU KHIỂN CAMERA AI</div>
+                    <div class="card-body">
                         <div class="d-grid gap-3">
-                            <button id="btn-cam-0" class="btn btn-cyber text-start w-100"
-                                onclick="toggleCamera(0, 'CUA_CHINH')">
-                                > EXECUTE: INIT_CAM_01 [MAIN_DOOR]
+                            <button id="btn-cam-0" class="btn btn-outline-primary text-start w-100"
+                                onclick="toggleCamera(1, 0, 'CUA_CHINH')">
+                                Kích hoạt Camera 01 (Cửa chính)
                             </button>
-                            <button id="btn-cam-1" class="btn btn-cyber text-start w-100"
-                                onclick="toggleCamera(1, 'CUA_SAU')">
-                                > EXECUTE: INIT_CAM_02 [BACK_DOOR]
+                            <button id="btn-cam-1" class="btn btn-outline-primary text-start w-100"
+                                onclick="toggleCamera(0, 1, 'CUA_SAU')">
+                                Kích hoạt Camera 02 (Cửa sau)
                             </button>
                         </div>
-                        <div id="camStatus" class="mt-3 p-2 border border-success text-success"
-                            style="background: rgba(0,255,0,0.1); font-size: 0.85rem;">
-                            STATUS: WAITING FOR INSTRUCTION...
+                        <div id="camStatus" class="mt-3 p-2 border rounded bg-light text-secondary text-center small">
+                            Trạng thái: Đang chờ lệnh...
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-header"><i class="bi bi-person-lines-fill"></i> DATABASE INJECTION</div>
+                    <div class="card-header"> THÊM THÀNH VIÊN</div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label class="form-label small">>_ ID_TAG</label>
-                            <input type="number" id="userId" class="form-control" placeholder="[Numeric ID]">
+                            <label class="form-label fw-bold">Mã ID</label>
+                            <input type="number" id="userId" class="form-control" placeholder="Nhập ID số">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small">>_ ALIAS / FULL NAME</label>
-                            <input type="text" id="userName" class="form-control" placeholder="[Subject Name]">
+                            <label class="form-label fw-bold">Họ và Tên</label>
+                            <input type="text" id="userName" class="form-control" placeholder="Nhập họ tên">
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small">>_ CLEARANCE LEVEL</label>
+                            <label class="form-label fw-bold">Quyền hạn</label>
                             <select id="userRole" class="form-select">
-                                <option value="Admin">ADMIN</option>
-                                <option value="Staff">STAFF</option>
+                                <option value="Admin">Quản trị viên</option>
+                                <option value="Staff">Nhân viên</option>
                             </select>
                         </div>
-                        <button class="btn btn-cyber w-100" onclick="addUser()">
-                            [+] PUSH TO DATABASE
+                        <button class="btn btn-primary-custom w-100" onclick="addUser()">
+                            Lưu Thông Tin
                         </button>
                     </div>
                 </div>
@@ -241,43 +198,41 @@
                     <li class="nav-item">
                         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#log-panel"
                             onclick="loadLogs()">
-                            > LIVE_LOG_FEED
+                            LỊCH SỬ RA VÀO
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-panel"
                             onclick="loadUsers()">
-                            > KNOWN_ENTITIES
+                            DANH SÁCH THÀNH VIÊN
                         </button>
                     </li>
                 </ul>
 
-                <div class="tab-content card p-3" style="min-height: 500px;">
+                <div class="tab-content card p-3" style="min-height: 650px;">
                     <div class="tab-pane fade show active" id="log-panel">
-                        <table class="table table-sm table-borderless table-hover">
-                            <thead class="border-bottom border-success">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-light">
                                 <tr>
-                                    <th>TIMESTAMP</th>
-                                    <th>SUBJECT</th>
-                                    <th>STATUS</th>
-                                    <th>CONFIDENCE_SCORE</th>
+                                    <th>Thời gian</th>
+                                    <th>Người dùng</th>
+                                    <th>Trạng thái</th>
+                                    <th>Độ sai lệch</th>
                                 </tr>
                             </thead>
                             <tbody id="logTable"></tbody>
                         </table>
                     </div>
-                    <div id="paginationControls" class="d-flex justify-content-end align-items-center mt-2">
-
-                    </div>
+                    <div id="paginationControls" class="d-flex justify-content-end align-items-center mt-2"></div>
 
                     <div class="tab-pane fade" id="user-panel">
-                        <table class="table table-sm table-borderless table-hover">
-                            <thead class="border-bottom border-success">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-light">
                                 <tr>
-                                    <th>ID_TAG</th>
-                                    <th>SUBJECT_NAME</th>
-                                    <th>CLEARANCE</th>
-                                    <th>ACTION</th>
+                                    <th>ID</th>
+                                    <th>Họ và Tên</th>
+                                    <th>Quyền hạn</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody id="userTable"></tbody>
@@ -301,56 +256,147 @@
                 document.getElementById('userCount').innerText = data.length;
                 data.forEach(user => {
                     html += `<tr>
-                    <td>[${user.id}]</td>
-                    <td class="text-cyan">${user.fullName}</td>
+                    <td>${user.id}</td>
+                    <td class="fw-bold">${user.fullName}</td>
                     <td>${user.role}</td>
-                    <td><button class="btn btn-alert btn-sm px-2 py-0" onclick="deleteUser(${user.id})">PURGE</button></td>
+                    <td>
+    ${user.role === 'ADMIN' ?
+                            '<button class="btn btn-secondary btn-sm" disabled>Không thể xóa</button>' :
+                            `<button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Xóa</button>`
+                        }
+</td>
                 </tr>`;
                 });
                 document.getElementById('userTable').innerHTML = html;
             });
         }
 
-        function addUser() {
-            const data = {
-                id: document.getElementById('userId').value,
-                fullName: document.getElementById('userName').value,
-                role: document.getElementById('userRole').value
-            };
-            fetch('/api/users', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }).then(() => {
-                loadUsers();
+        async function addUser() {
+            const idInput = document.getElementById('userId').value;
+            const nameInput = document.getElementById('userName').value;
+            const roleInput = document.getElementById('userRole').value;
+
+            const btn = document.querySelector('button[onclick="addUser()"]');
+
+            if (!idInput || !nameInput) {
+                alert("Vui lòng nhập đầy đủ Mã ID và Họ Tên!");
+                return;
+            }
+
+            const userId = parseInt(idInput);
+            const originalText = btn.innerHTML;
+
+            try {
+                btn.disabled = true;
+
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang kiểm tra ID...';
+                let usersRes = await fetch('/api/users');
+                let usersList = await usersRes.json();
+
+                let isDuplicateID = usersList.some(user => user.id === userId);
+                if (isDuplicateID) {
+                    throw new Error(`Mã ID ${userId} đã tồn tại trong Cơ sở dữ liệu! Vui lòng nhập số ID khác.`);
+                }
+
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang quét khuôn mặt...';
+                let checkRes = await fetch('/api/camera/check_face');
+                let checkData = await checkRes.json();
+
+                if (checkData.status !== 'success' || !checkData.has_face) {
+                    throw new Error("Không tìm thấy khuôn mặt nào trước Camera. Vui lòng đứng vào khung hình!");
+                }
+                if (checkData.distance < 70.0) {
+                    throw new Error(`Khuôn mặt này đã tồn tại (ID cũ: ${checkData.id}). Không thể đăng ký trùng mặt!`);
+                }
+
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang chụp 50 ảnh mẫu...';
+                let collectRes = await fetch('/api/camera/collect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, full_name: nameInput, role: roleInput })
+                });
+
+                let collectData = await collectRes.json();
+                if (!collectRes.ok || collectData.status === 'error') {
+                    throw new Error("Lỗi kết nối khi C++ chụp ảnh: " + (collectData.message || ""));
+                }
+
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang lưu CSDL...';
+                let dbRes = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: userId, fullName: nameInput, role: roleInput })
+                });
+                if (!dbRes.ok) throw new Error("Loi khi luu vao DB!");
+
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang huấn luyện AI...';
+                let trainRes = await fetch('/api/camera/train', { method: 'POST' });
+                if (!trainRes.ok) throw new Error("Loi khi huan luyen AI!");
+
+                alert("Them thanh cong! Da cap nhat AI va CSDL.");
+
+                // Khôi phục UI
                 document.getElementById('userId').value = '';
                 document.getElementById('userName').value = '';
-            });
-        }
+                btn.innerHTML = originalText;
+                btn.disabled = false;
 
-        function deleteUser(id) {
-            if (confirm('WARNING: PERMANENTLY PURGE THIS ENTITY?')) {
-                fetch('/api/users/' + id, { method: 'DELETE' }).then(() => loadUsers());
+                // Load lại bảng
+                loadUsers();
+
+            } catch (error) {
+                // Xử lý lỗi: Mở khóa nút và báo lỗi
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert("LỖI ĐĂNG KÝ:\n" + error.message);
             }
         }
-        // ĐIỀU KHIỂN CỬA THỦ CÔNG (OVERRIDE)
+        async function deleteUser(id) {
+            if (confirm(`CẢNH BÁO: Bạn có chắc chắn muốn xóa thành viên ID ${id} không?\nHành động này sẽ xóa dữ liệu trên Web và làm AI quên khuôn mặt này!`)) {
+                try {
+                    // Hiện thông báo đang xử lý (tùy chọn)
+                    document.getElementById('userCount').innerText = 'Đang xóa...';
+
+                    // 1. Gọi API Spring Boot để xóa trong MySQL (Bạn cần tự viết API này bên Java)
+                    let dbRes = await fetch('/api/users/' + id, { method: 'DELETE' });
+                    if (!dbRes.ok) throw new Error("Lỗi khi xóa trong Cơ sở dữ liệu!");
+
+                    // 2. Gọi API yêu cầu C++ xóa ảnh và train lại
+                    let cppRes = await fetch('/api/camera/delete_face', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: parseInt(id) })
+                    });
+
+                
+
+                    alert("Đã xóa thành viên và cập nhật AI thành công!");
+                    loadUsers(); // Load lại bảng
+
+                } catch (error) {
+                    alert("Lỗi khi xóa:\n" + error.message);
+                    loadUsers();
+                }
+            }
+        }
+
         function overrideDoor(command) {
-            if (confirm(`WARNING: TACTICAL OVERRIDE INITIATED.\nEXECUTE COMMAND [${command} DOOR]?`)) {
+            if (confirm(`Xác nhận thực hiện lệnh: ${command === 'OPEN' ? 'MỞ' : 'KHÓA'} CỬA?`)) {
                 fetch('/api/override', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: command })
                 }).then(res => {
                     if (res.ok) {
-                        loadLogs(0); 
+                        loadLogs(0);
                     } else {
-                        alert('ERROR: CONNECTION TO BROKER FAILED.');
+                        alert('Lỗi: Không thể kết nối đến thiết bị.');
                     }
                 });
             }
         }
-        // --- QUẢN LÝ LỊCH SỬ (LOGS) ---
-        let currentLogPage = 0; 
+
+        let currentLogPage = 0;
 
         function loadLogs(page = 0) {
             fetch(`/api/logs?page=${page}&size=20`)
@@ -361,7 +407,7 @@
                     data.content.forEach(log => {
                         html += `<tr>
                     <td>${log.accessTime || log.timestamp}</td>
-                    <td class="text-cyan">${log.userName || "UNKNOWN"}</td>
+                    <td class="fw-bold text-primary">${log.userName || "Không xác định"}</td>
                     <td>${log.status}</td>
                     <td>${log.confidence ? log.confidence.toFixed(2) : ""}</td>
                 </tr>`;
@@ -373,58 +419,55 @@
 
                     let pagHtml = '';
                     if (currentLogPage > 0) {
-                        pagHtml += `<button class="btn btn-sm btn-outline-info me-2" onclick="loadLogs(${currentLogPage - 1})">< PREV</button>`;
+                        pagHtml += `<button class="btn btn-sm btn-outline-secondary me-2" onclick="loadLogs(${currentLogPage - 1})">Trước</button>`;
                     }
-                    pagHtml += `<span class="text-info mx-3">PAGE ${currentLogPage + 1} / ${totalPages || 1}</span>`;
+                    pagHtml += `<span class="text-secondary mx-3">Trang ${currentLogPage + 1} / ${totalPages || 1}</span>`;
 
                     if (currentLogPage < totalPages - 1) {
-                        pagHtml += `<button class="btn btn-sm btn-outline-info ms-2" onclick="loadLogs(${currentLogPage + 1})">NEXT ></button>`;
+                        pagHtml += `<button class="btn btn-sm btn-outline-secondary ms-2" onclick="loadLogs(${currentLogPage + 1})">Sau</button>`;
                     }
 
                     document.getElementById('paginationControls').innerHTML = pagHtml;
                 });
         }
 
-
-
-        //ĐIỀU KHIỂN CAMERA
         let camStates = { 0: false, 1: false };
 
-        function toggleCamera(index, name) {
+        function toggleCamera(hardwareIndex, slotIndex, name) {
             const statusDiv = document.getElementById('camStatus');
-            const btn = document.getElementById('btn-cam-' + index);
-            const isRunning = camStates[index];
+            // Tìm nút UI dựa trên slotIndex thay vì index chung chung
+            const btn = document.getElementById('btn-cam-' + slotIndex); 
+            // Trạng thái bật/tắt cũng phải lưu theo slotIndex
+            const isRunning = camStates[slotIndex];
 
             if (!isRunning) {
-                //LỆNH BẬT CAMERA
-                btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> INITIATING...`;
+                btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Đang khởi động...`;
                 fetch('/api/camera/start', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cam_index: index, cam_name: name })
+                    body: JSON.stringify({ cam_index: hardwareIndex, cam_name: name, slot_index: slotIndex }) 
                 }).then(res => {
                     if (res.ok) {
-                        camStates[index] = true; 
-                        btn.innerHTML = `[X] TERMINATE_CAM: ${name}`; 
-                        btn.className = "btn btn-alert text-start w-100";
-                        statusDiv.innerHTML = `STATUS: ${name} IS LIVE & MONITORING.`;
-                        statusDiv.className = "mt-3 p-2 border border-success text-success";
+                        camStates[slotIndex] = true;
+                        btn.innerHTML = `Tắt Camera: ${name}`;
+                        btn.className = "btn btn-danger-custom text-start w-100 p-2";
+                        statusDiv.innerHTML = `Trạng thái: ${name} đang hoạt động.`;
+                        statusDiv.className = "mt-3 p-2 border rounded bg-success text-white text-center small";
                     }
                 });
             } else {
-                //LỆNH TẮT CAMERA
-                btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> SHUTTING DOWN...`;
-                fetch('/api/camera/stop', { 
+                btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Đang tắt...`;
+                fetch('/api/camera/stop', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cam_index: index, cam_name: name })
+                    body: JSON.stringify({ cam_index: hardwareIndex, cam_name: name, slot_index: slotIndex })
                 }).then(res => {
                     if (res.ok) {
-                        camStates[index] = false;
-                        btn.innerHTML = `> EXECUTE: INIT_CAM_0${index + 1} [${name}]`;
-                        btn.className = "btn btn-cyber text-start w-100";
-                        statusDiv.innerHTML = `STATUS: ${name} OFFLINE. STANDBY MODE.`;
-                        statusDiv.className = "mt-3 p-2 border border-warning text-warning";
+                        camStates[slotIndex] = false;
+                        btn.innerHTML = `Kích hoạt Camera 0${slotIndex + 1} (${name})`;
+                        btn.className = "btn btn-outline-primary text-start w-100";
+                        statusDiv.innerHTML = `Trạng thái: ${name} đã ngoại tuyến.`;
+                        statusDiv.className = "mt-3 p-2 border rounded bg-warning text-dark text-center small";
                     }
                 });
             }

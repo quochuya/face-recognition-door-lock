@@ -116,7 +116,7 @@ void runCameraWorker(int camIndex, const std::string &camName, int slotIndex, Ap
             continue;
         }
 
-        // Cập nhật frame sạch vào mảng dùng chung cho UI hiển thị
+
         {
             std::lock_guard<std::mutex> lock(frameMutex);
             frame.copyTo(globalFrames[slotIndex]);

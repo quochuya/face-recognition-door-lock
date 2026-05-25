@@ -33,7 +33,7 @@ void FaceTrainer::trainModel(const std::string& datasetPath, const std::string& 
         cv::equalizeHist(img, img);
 
         try {
-            int id = std::stoi(filename.substr(0, filename.find('.')));
+            int id = std::stoi(filename.substr(0    , filename.find('.')));
             images.push_back(img);
             labels.push_back(id);
             imageCount++;

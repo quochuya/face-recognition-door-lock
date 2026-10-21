@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "Galaxy A12 F315";
-const char* password = "Lequochuy";
+const char* ssid = "";
+const char* password = "";
 
 const char* mqtt_server = "broker.emqx.io";
 
